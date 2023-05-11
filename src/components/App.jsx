@@ -58,6 +58,7 @@ export class App extends Component {
   getSerchName = imageName => {
     this.setState({
       imageName,
+      page: 1,
     });
   };
 
@@ -69,7 +70,7 @@ export class App extends Component {
     });
   };
 
-  onClick = event => {
+  openModal = event => {
     // console.log(event.currentTarget)
     this.setState({ modalImage: event.currentTarget.src });
   };
@@ -84,7 +85,7 @@ export class App extends Component {
     return (
       <>
         <Searchabar onSubmit={this.getSerchName} />
-        <ImageGallery images={this.state.arrayImages} click={this.onClick} />
+        <ImageGallery images={this.state.arrayImages} click={this.openModal} />
         {this.state.imageName && <Button addImages={this.btnAddImages} />}
         {this.state.modalImage && (
           <Modal url={this.state.modalImage} modalClose={this.onModalClose} />
