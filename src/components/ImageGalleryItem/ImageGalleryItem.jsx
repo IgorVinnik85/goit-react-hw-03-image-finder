@@ -8,7 +8,7 @@ export class ImageGalleryItem extends Component {
   };
 
   openModal = event => {
-    console.log(event.currentTarget.alt);
+    // console.log(event.currentTarget.alt);
     this.setState({
       modalImage: this.props.largeImg,
       modalAlt: event.currentTarget.alt,
