@@ -2,33 +2,30 @@ import React, { Component } from 'react';
 import css from './Modal.module.css';
 
 export class Modal extends Component {
-  state = {
-  
-  }
-  
+  state = {};
+
   componentDidMount() {
-    window.addEventListener('keydown', this.handlePressEsc)
+    window.addEventListener('keydown', this.handlePressEsc);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.handlePressEsc)
+    window.removeEventListener('keydown', this.handlePressEsc);
   }
 
   handlePressEsc = event => {
     console.log(event.code);
     if (event.code === 'Escape') {
-      this.props.closeEsc()
+      this.props.closeEsc();
     }
-  }
+  };
 
   render() {
     return (
-       <div className={css.overlay} onClick={this.props.modalClose}>
-      <div className={css.modal}>
-        <img src={this.props.url.link} alt={this.props.url.alt} />
+      <div className={css.overlay} onClick={this.props.modalClose}>
+        <div className={css.modal}>
+          <img src={this.props.url} alt={this.props.alt} />
+        </div>
       </div>
-    </div>
-   )
+    );
   }
-  
-};
+}

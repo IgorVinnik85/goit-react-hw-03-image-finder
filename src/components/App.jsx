@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Searchabar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from 'components/Button/Button';
-import { Modal } from './Modal/Modal';
+
 
 const KEY = '34813361-3927ac478a2bf3f204ffaaf5a';
 
@@ -12,7 +12,7 @@ export class App extends Component {
     arrayImages: [],
     page: 1,
     error: null,
-    modalImage: null,
+ 
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -56,25 +56,7 @@ export class App extends Component {
     });
   };
 
-  openModal = event => {
-    // console.log(event.currentTarget.alt)
-    this.setState({
-      modalImage: {
-        link: event.currentTarget.src,
-        alt: event.currentTarget.alt,
-      },
-    });
-  };
-
-  closeModal = () => {
-       this.setState({ modalImage: null });
-  }
-
-  closeModalClick = event => {
-    if (event.target === event.currentTarget) {
-    this.closeModal()
-    }
-  };
+  
 
   render() {
     return (
@@ -82,13 +64,7 @@ export class App extends Component {
         <Searchabar onSubmit={this.getSerchName} />
         <ImageGallery images={this.state.arrayImages} click={this.openModal} />
         {this.state.imageName && <Button addImages={this.btnAddImages} />}
-        {this.state.modalImage && (
-          <Modal
-            url={this.state.modalImage}
-            modalClose={this.closeModalClick}
-            closeEsc={this.closeModal}
-          />
-        )}
+        
       </>
     );
   }
