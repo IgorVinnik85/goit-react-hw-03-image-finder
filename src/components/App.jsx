@@ -57,13 +57,22 @@ export class App extends Component {
   };
 
   openModal = event => {
-    // console.log(event.currentTarget)
-    this.setState({ modalImage: event.currentTarget.src });
+    // console.log(event.currentTarget.alt)
+    this.setState({
+      modalImage: {
+        link: event.currentTarget.src,
+        alt: event.currentTarget.alt,
+      },
+    });
   };
 
-  onModalClose = event => {
+  closeModal = () => {
+       this.setState({ modalImage: null });
+  }
+
+  closeModalClick = event => {
     if (event.target === event.currentTarget) {
-      this.setState({ modalImage: null });
+    this.closeModal()
     }
   };
 
@@ -74,7 +83,11 @@ export class App extends Component {
         <ImageGallery images={this.state.arrayImages} click={this.openModal} />
         {this.state.imageName && <Button addImages={this.btnAddImages} />}
         {this.state.modalImage && (
-          <Modal url={this.state.modalImage} modalClose={this.onModalClose} />
+          <Modal
+            url={this.state.modalImage}
+            modalClose={this.closeModalClick}
+            closeEsc={this.closeModal}
+          />
         )}
       </>
     );
