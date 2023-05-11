@@ -1,18 +1,17 @@
-import React from "react";
-import css from './ImageGalleryItem.module.css'
+import React from 'react';
+import css from './ImageGalleryItem.module.css';
 
-export const ImageGalleryItem = ({ arrayImages}) => {
-  console.log(arrayImages);
-  return arrayImages.map(({ id, webformatURL, tags }) => {
-    return (
-      <li key={id} className={css.imageGalleryItem}>
-        <img
-          src={webformatURL}
-          alt={tags}
-          width="400"
-          className={css.imageGalleryItem_image}
-        />
-      </li>
-    );
-  });
-}; 
+export const ImageGalleryItem = ({ arrTags, arrLink, clickOnEl }) => {
+  // console.log(clickOnEl);
+  return (
+    <li className={css.imageGalleryItem}>
+      <img
+        onClick={clickOnEl}
+        src={arrLink}
+        alt={arrTags}
+        width="400"
+        className={css.imageGalleryItem_image}
+      />
+    </li>
+  );
+};
