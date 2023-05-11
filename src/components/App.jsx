@@ -16,25 +16,10 @@ export class App extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.imageName !== this.state.imageName) {
-      fetch(
-        `https://pixabay.com/api/?q=${this.state.imageName}&page=${this.state.page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
-      )
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-
-          return Promise.reject(new Error('Nothing was found'));
-        })
-        .then(res => {
-          this.setState({
-            arrayImages: res.hits,
-          });
-        })
-        .catch(er => this.setState({ er }));
-    }
-    if (prevState.page !== this.state.page) {
+    if (
+      (prevState.imageName !== this.state.imageName || prevState.page) !==
+      this.state.page
+    ) {
       fetch(
         `https://pixabay.com/api/?q=${this.state.imageName}&page=${this.state.page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
       )
@@ -57,8 +42,9 @@ export class App extends Component {
   }
   getSerchName = imageName => {
     this.setState({
-      imageName,
+      arrayImages: [],
       page: 1,
+      imageName,
     });
   };
 

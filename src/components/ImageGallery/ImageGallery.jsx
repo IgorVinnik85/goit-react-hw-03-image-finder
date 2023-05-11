@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import css from './ImageGallery.module.css';
 
 export const ImageGallery = ({ images, click }) => {
-  // console.log(click);
+  console.log(images);
   return (
     <>
       <ul className={css.imageGallery}>
