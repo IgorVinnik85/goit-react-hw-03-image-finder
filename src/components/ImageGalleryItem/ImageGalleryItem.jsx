@@ -49,4 +49,4 @@ export class ImageGalleryItem extends Component {
   }
 }
 
-// arrTags, arrLink, clickOnEl;
+
