@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import css from './Modal.module.css';
+import PropTypes from 'prop-types';
 
 export class Modal extends Component {
   state = {};
@@ -20,12 +21,21 @@ export class Modal extends Component {
   };
 
   render() {
+    const { modalClose, alt, url } = this.props;
     return (
-      <div className={css.overlay} onClick={this.props.modalClose}>
+      <div className={css.overlay} onClick={modalClose}>
         <div className={css.modal}>
-          <img src={this.props.url} alt={this.props.alt} />
+          <img src={url} alt={alt} />
         </div>
       </div>
     );
   }
 }
+
+
+Modal.propTypes = {
+  modalClose: PropTypes.func.isRequired,
+  closeEsc: PropTypes.func.isRequired,
+  alt: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+};

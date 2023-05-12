@@ -1,9 +1,9 @@
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import React from 'react';
 import css from './ImageGallery.module.css';
+import PropTypes from 'prop-types';
 
 export const ImageGallery = ({ images }) => {
-  console.log(images);
   return (
     <>
       <ul className={css.imageGallery}>
@@ -11,8 +11,8 @@ export const ImageGallery = ({ images }) => {
           return (
             <ImageGalleryItem
               key={id}
-              arrTags={tags}
-              arrLink={webformatURL}
+              tag={tags}
+              link={webformatURL}
               largeImg={largeImageURL}
             />
           );
@@ -20,4 +20,8 @@ export const ImageGallery = ({ images }) => {
       </ul>
     </>
   );
+};
+
+ImageGallery.propTypes = {
+  images: PropTypes.arrayOf(PropTypes.object.isRequired),
 };

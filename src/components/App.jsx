@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Searchabar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from 'components/Button/Button';
+import { Oval } from 'react-loader-spinner';
 
-
-const KEY = '34813361-3927ac478a2bf3f204ffaaf5a';
+const API_KEY = '34813361-3927ac478a2bf3f204ffaaf5a';
 
 export class App extends Component {
   state = {
@@ -12,7 +12,7 @@ export class App extends Component {
     arrayImages: [],
     page: 1,
     error: null,
- 
+    loader: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -20,8 +20,12 @@ export class App extends Component {
       (prevState.imageName !== this.state.imageName || prevState.page) !==
       this.state.page
     ) {
+      this.setState({
+        loader: true,
+      });
+
       fetch(
-        `https://pixabay.com/api/?q=${this.state.imageName}&page=${this.state.page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
+        `https://pixabay.com/api/?q=${this.state.imageName}&page=${this.state.page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
       )
         .then(response => {
           if (response.ok) {
@@ -37,7 +41,12 @@ export class App extends Component {
             };
           });
         })
-        .catch(er => this.setState({ er }));
+        .catch(er => this.setState({ er }))
+        .finally(() =>
+          this.setState({
+            loader: false,
+          })
+        );
     }
   }
   getSerchName = imageName => {
@@ -56,15 +65,27 @@ export class App extends Component {
     });
   };
 
-  
-
   render() {
+    const { arrayImages, imageName } = this.state;
     return (
       <>
         <Searchabar onSubmit={this.getSerchName} />
-        <ImageGallery images={this.state.arrayImages} click={this.openModal} />
-        {this.state.imageName && <Button addImages={this.btnAddImages} />}
-        
+        <ImageGallery images={arrayImages} click={this.openModal} />
+        {this.state.loader && (
+          <Oval
+            height={200}
+            width={5000}
+            color="#4fa94d"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+            ariaLabel="oval-loading"
+            secondaryColor="#4fa94d"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        )}
+        {imageName && <Button addImages={this.btnAddImages} />}
       </>
     );
   }
