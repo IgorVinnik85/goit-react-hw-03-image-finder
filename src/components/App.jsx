@@ -13,6 +13,7 @@ export class App extends Component {
     page: 1,
     error: null,
     loader: null,
+    btnVisible: true,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -35,6 +36,16 @@ export class App extends Component {
           return Promise.reject(new Error('Nothing was found'));
         })
         .then(res => {
+          console.log(res.hits);
+
+          res.hits.length < 12
+            ? this.setState({
+                btnVisible: false,
+              })
+            : this.setState({
+                btnVisible: true,
+              });
+
           this.setState(prevState => {
             return {
               arrayImages: [...prevState.arrayImages, ...res.hits],
@@ -42,11 +53,15 @@ export class App extends Component {
           });
         })
         .catch(er => this.setState({ er }))
-        .finally(() =>
+        .finally(() => {
           this.setState({
             loader: false,
-          })
-        );
+          });
+
+          if (this.state.arrayImages.length) {
+            window.scrollBy(0, 255);
+          }
+        });
     }
   }
   getSerchName = imageName => {
@@ -66,7 +81,7 @@ export class App extends Component {
   };
 
   render() {
-    const { arrayImages, imageName } = this.state;
+    const { arrayImages, imageName, btnVisible } = this.state;
     return (
       <>
         <Searchabar onSubmit={this.getSerchName} />
@@ -85,7 +100,7 @@ export class App extends Component {
             strokeWidthSecondary={2}
           />
         )}
-        {imageName && <Button addImages={this.btnAddImages} />}
+        {imageName && btnVisible && <Button addImages={this.btnAddImages} />}
       </>
     );
   }
